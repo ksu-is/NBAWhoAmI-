@@ -1,59 +1,167 @@
+import tkinter as tk
 import random
-print("Welcome to NBA Who Am I - Guess the player!")
 
 players = {
     "LeBron James": [
-        "Played for the Cavaliers and Lakers",
-        "Multiple NBA championships",
+        "Played for Cavaliers and Lakers",
+        "NBA champion and MVP",
         "Known as King James"
     ],
     "Stephen Curry": [
-        "Elite three-point shooter",
-        "Star for Golden State Warriors",
+        "Best shooter in NBA history",
+        "Golden State Warriors star",
         "Multiple MVP awards"
     ],
     "Giannis Antetokounmpo": [
         "Known as the Greek Freak",
         "Milwaukee Bucks superstar",
-        "NBA MVP and Finals MVP"
-    ],
-    "Jayson Tatum": [
-        "Star forward for the Boston Celtics",
-        "Key player in NBA Finals runs",
-        "Elite scorer and two-way player"
+        "NBA champion and MVP"
     ],
     "Nikola Jokić": [
-        "Center for the Denver Nuggets",
-        "Multiple MVP awards",
-        "Elite passing big man"
+        "Denver Nuggets center",
+        "Elite passing big man",
+        "Multiple MVP awards"
+    ],
+    "Jayson Tatum": [
+        "Boston Celtics star forward",
+        "Elite scorer and two-way player",
+        "Key NBA Finals performer"
     ],
     "Anthony Edwards": [
-        "Explosive guard for the Minnesota Timberwolves",
-        "Known for athletic scoring ability",
-        "One of the league’s rising young stars"
+        "Explosive guard for Timberwolves",
+        "Elite athletic scorer",
+        "Rising NBA superstar"
     ],
     "Shai Gilgeous-Alexander": [
-        "Star guard for the Oklahoma City Thunder",
-        "Elite scorer and playmaker",
-        "One of the NBA’s top young MVP-level players"
+        "Oklahoma City Thunder star guard",
+        "Elite midrange scorer",
+        "MVP-level performance in recent seasons"
     ],
     "Kevin Durant": [
-         "Elite scorer",
-         "Won multiple NBA championships",
-         "Played for Warriors and Suns"
- ]
+        "One of the greatest scorers ever",
+        "NBA champion and MVP",
+        "Plays forward position"
+    ],
+    "Luka Dončić": [
+        "Elite playmaking guard/forward",
+        "Known for step-back shots and scoring",
+        "One of the NBA’s top young stars"
+    ],
+    "Joel Embiid": [
+        "Dominant center for the 76ers",
+        "NBA MVP",
+        "Elite scoring big man"
+    ],
+    "Damian Lillard": [
+        "Elite deep-range shooter",
+        "Known as 'Dame Time'",
+        "All-NBA point guard"
+    ],
+    "Kawhi Leonard": [
+        "Two-time NBA champion",
+        "Elite defensive player",
+        "Known for clutch playoff performances"
+    ],
+    "Devin Booker": [
+        "Star shooting guard for the Suns",
+        "Elite scorer",
+        "NBA Finals appearance"
+    ],
+    "Donovan Mitchell": [
+        "Explosive scoring guard",
+        "Star for Cleveland Cavaliers",
+        "Known for high-scoring games"
+    ],
+    "Bam Adebayo": [
+        "Defensive anchor for Miami Heat",
+        "Elite versatile big man",
+        "NBA Finals competitor"
+    ]
 }
 
+# Pick random player
 player = random.choice(list(players.keys()))
+clues = players[player]
+clue_index = 0
 
-print("NBA Who Am I?")
+# Create window
+root = tk.Tk()
+root.title("NBA Who Am I Game")
+root.geometry("500x420")
+root.configure(bg="#1e1e2f")
 
-for clue in players[player]:
-    print("Clue:", clue)
-    guess = input("Your guess: ")
+# Title
+title = tk.Label(
+    root,
+    text="🏀 NBA WHO AM I 🏀",
+    font=("Helvetica", 18, "bold"),
+    fg="white",
+    bg="#1e1e2f"
+)
+title.pack(pady=10)
 
+# Clue display
+clue_label = tk.Label(
+    root,
+    text="Click 'Next Clue' to start!",
+    font=("Helvetica", 14),
+    fg="yellow",
+    bg="#1e1e2f",
+    wraplength=400
+)
+clue_label.pack(pady=20)
+
+# Input box
+guess_entry = tk.Entry(root, font=("Helvetica", 14))
+guess_entry.pack(pady=10)
+
+# Result label
+result_label = tk.Label(root, text="", font=("Helvetica", 14), bg="#1e1e2f")
+result_label.pack(pady=10)
+
+# Functions
+def next_clue():
+    global clue_index
+    if clue_index < len(clues):
+        clue_label.config(text="Clue: " + clues[clue_index])
+        clue_index += 1
+    else:
+        clue_label.config(text="No more clues!")
+
+def check_guess():
+    guess = guess_entry.get()
     if guess.lower() == player.lower():
-        print("Correct!")
-        break
-else:
-    print("The answer was:", player)
+        result_label.config(text="Correct! 🎉", fg="green")
+    else:
+        result_label.config(text="Try again!", fg="red")
+
+# Buttons
+tk.Button(
+    root,
+    text="Next Clue",
+    command=next_clue,
+    bg="#4A90E2",
+    fg="white",
+    activebackground="#357ABD",
+    activeforeground="white",
+    font=("Helvetica", 12, "bold"),
+    relief="flat",
+    padx=10,
+    pady=5
+).pack(pady=5)
+
+tk.Button(
+    root,
+    text="Submit Guess",
+    command=check_guess,
+    bg="#2ECC71",
+    fg="white",
+    activebackground="#27AE60",
+    activeforeground="white",
+    font=("Helvetica", 12, "bold"),
+    relief="flat",
+    padx=10,
+    pady=5
+).pack(pady=5)
+
+root.mainloop()
